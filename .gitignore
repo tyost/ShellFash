@@ -1,3 +1,6 @@
 # Ignore PyDev / Eclipse files
 .project
 .pydevproject
+
+# Ignore files from compilation.
+*.py[cod]
