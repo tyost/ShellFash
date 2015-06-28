@@ -7,7 +7,7 @@ License:
 import platform
 import unittest
 from shellfash.view.native.Win32API import Win32API
-from shellfash.test.environment.helper.TestWindowCreator import TestWindowCreator
+from shellfash.test.helper.TestWindowCreator import TestWindowCreator
 
 @unittest.skipUnless(
     platform.system() == 'Windows',
