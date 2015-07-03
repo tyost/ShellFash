@@ -23,5 +23,9 @@ setup(
     ],
     keywords='', # TODO: Keywords
     packages=find_packages(exclude=['test*']),
-    install_requires=['wxPython_Phoenix>=3'],
+    install_requires=[
+        'appdirs>=1.4',
+        'click>=4,<5',
+        'wxPython_Phoenix>=3'
+    ],
 )
