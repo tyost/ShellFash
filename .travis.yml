@@ -1,0 +1,17 @@
+language: python
+
+# Pick python versions to use in testing.
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "nightly"
+  - "pypy3"
+
+# Install package and dependencies using pip.
+install:
+  - pip install .
+
+# Run the tests.
+script:
+  - python -m unittest
