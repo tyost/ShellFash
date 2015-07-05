@@ -19,7 +19,10 @@ setup(
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3 :: Only'
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4'
     ],
     keywords='', # TODO: Keywords
     packages=find_packages(exclude=['test*']),
