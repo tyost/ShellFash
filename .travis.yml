@@ -23,6 +23,7 @@ install:
   # is not on PYPI as of this writing.
   # Grab a pre-compiled version for Ubuntu based on the Python version.
   - if [[ $TRAVIS_PYTHON_VERSION == 3.2 ]]; then pip install --pre https://github.com/tyost/ShellFashDependencies/releases/download/wxPython_Phoenix-3.0.3.dev1820.49a8884/wxPython_Phoenix-3.0.3.dev1820.49a8884-cp32-cp32mu-linux_x86_64.whl; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then pip install --pre https://github.com/tyost/ShellFashDependencies/releases/download/wxPython_Phoenix-3.0.3.dev1820.49a8884/wxPython_Phoenix-3.0.3.dev1820.49a8884-cp33-cp33m-linux_x86_64.whl; fi
   
   # Install ShellFash.
   - pip install .
