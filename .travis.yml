@@ -1,3 +1,6 @@
+# This file is used for the continuous integration service at
+# https://travis-ci.org/
+
 language: python
 
 # Pick python versions to use in testing.
@@ -10,6 +13,9 @@ python:
 
 # Install package and dependencies using pip.
 install:
+  # wxPython Phoenix must be installed specially because it
+  # is not on PYPI as of this writing.
+  - pip install --pre --trusted-host wxpython.org -f http://wxpython.org/Phoenix/snapshot-builds/ wxPython_Phoenix
   - pip install .
 
 # Run the tests.
