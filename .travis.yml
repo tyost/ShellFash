@@ -12,16 +12,12 @@ python:
   - "pypy3"
 
 # Install dependencies for wxPython Phoenix.
-addons:
-  apt:
-    packages:
-      - dpkg-dev
-      - build-essential
-      - libjpeg-dev
-      - libtiff-dev
-      - libgtk2.0-dev
-      - libsdl1.2-dev
-      - libgstreamer-plugins-base0.10-dev
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y build-essential
+  - sudo apt-get install -y libjpeg-dev libtiff-dev
+  - sudo apt-get install -y libgtk2.0-dev
+  - sudo apt-get install -y libsdl1.2-dev libgstreamer-plugins-base0.10-dev
 
 # Install ShellFash package and dependencies using pip.
 install:
