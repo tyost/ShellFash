@@ -190,18 +190,3 @@ class Win32API(object):
             Win32API._ShowWindowAsync.restype = ctypes.wintypes.BOOL
         
         return bool(Win32API._ShowWindowAsync(hWnd, nCmdShow))
-
-import wx
-
-if __name__ == '__main__':
-
-    # See: https://sjohannes.wordpress.com/2012/03/23/win32-python-getting-all-window-titles/
-    # See: https://docs.python.org/3.4/library/ctypes.html
-    # The 'W' on the end means we are picking the unicode version of the
-    # Windows API function.
-    FindWindow = ctypes.windll.user32.FindWindowW
-    FindWindow.argtypes = [ctypes.wintypes.LPCWSTR, ctypes.wintypes.LPCWSTR]
-    FindWindow.restype = ctypes.wintypes.HWND
-    notepadHWND = ctypes.windll.user32.FindWindowW(None, "Untitled - Notepad")
-    notepadWindow = wx.Window()
-    notepadWindow.AssociateHandle(notepadHWND)
