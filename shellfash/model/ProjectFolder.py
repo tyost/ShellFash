@@ -34,7 +34,7 @@ class ProjectFolder(object):
         else:
             self._nameValidator = _nameValidator
 
-        if not _nameValidator.validate(projectName):
+        if not self._nameValidator.validate(projectName):
             raise ValueError('Argument projectName was "' + projectName
                              + '" which does not match the syntax'
                              'for a valid project name.')
