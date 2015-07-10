@@ -27,8 +27,10 @@ install:
   - if [[ $TRAVIS_PYTHON_VERSION == 3.4 ]]; then pip install --pre https://github.com/tyost/ShellFashDependencies/releases/download/wxPython_Phoenix-3.0.3.dev1820.49a8884/wxPython_Phoenix-3.0.3.dev1820.49a8884-cp34-cp34m-linux_x86_64.whl; fi
   
   # Install ShellFash.
-  - pip install .
+  - pip install -e .
 
 # Run the tests.
 script:
+  # TODO: Run a pep8 . check.
+
   - python -m unittest
