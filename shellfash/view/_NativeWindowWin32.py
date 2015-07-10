@@ -18,12 +18,13 @@ class _NativeWindowWin32(object):
     into Python or other cross-platform libraries that could be found.
     '''
 
-    def __init__(self, windowHandle, _win32):
+    def __init__(self, windowHandle, _win32=None):
         '''
         Constructor
         '''
         self._handle = windowHandle
         self._win32 = _win32 or Win32API()
+    
     
     def is_supported(self):
         '''
