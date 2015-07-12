@@ -9,13 +9,16 @@ python:
   - "3.3"
   - "3.4"
 
-# Install dependencies for wxPython Phoenix.
 before_install:
+  # Install dependencies for wxPython Phoenix.
   - sudo apt-get update -qq
   - sudo apt-get install -y build-essential
   - sudo apt-get install -y libjpeg-dev libtiff-dev
   - sudo apt-get install -y libgtk2.0-dev
   - sudo apt-get install -y libsdl1.2-dev libgstreamer-plugins-base0.10-dev
+  
+  # Install nose so we can use nosetests to run our tests.
+  - pip install nose
 
 # Install ShellFash package and dependencies using pip.
 install:
@@ -33,4 +36,8 @@ install:
 script:
   # TODO: Run a pep8 . check.
 
-  - python -m unittest
+  # For debugging, list everything in the current directory.
+  - ls
+  
+  # Find and run the tests using nose.
+  - nosetests
