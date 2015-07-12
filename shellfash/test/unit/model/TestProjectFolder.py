@@ -6,7 +6,12 @@ License:
 '''
 import unittest
 from shellfash.model.ProjectFolder import ProjectFolder
-from unittest.mock import NonCallableMock, Mock
+try:
+    # Python 3.3 and higher.
+    from unittest import mock
+except ImportError:
+    # Python 3.2.
+    import mock
 from shellfash.model.ProjectNameValidator import ProjectNameValidator
 from appdirs import AppDirs
 import os
@@ -19,13 +24,13 @@ class TestProjectFolder(unittest.TestCase):
 
     def setUp(self):
         # Set up doubles to replace real objects during testing.
-        self.doubleNameValidator = NonCallableMock(
+        self.doubleNameValidator = mock.NonCallableMock(
             spec = ProjectNameValidator()
         )
-        self.doubleAppDirs = NonCallableMock(
+        self.doubleAppDirs = mock.NonCallableMock(
             spec = AppDirs('shellfash')
         )
-        self.doubleOpen = Mock(spec = open)
+        self.doubleOpen = mock.Mock(spec = open)
     
         # Create instance of class under test.
         self.projectFolder = ProjectFolder(
@@ -37,14 +42,14 @@ class TestProjectFolder(unittest.TestCase):
     
     
     def test_constructor_projectname_good_verify_no_exception(self):
-        self.doubleNameValidator.validate = Mock(return_value=True)
+        self.doubleNameValidator.validate = mock.Mock(return_value=True)
         self.projectFolder = ProjectFolder(
             projectName = 'GoodName',
             _nameValidator = self.doubleNameValidator
         )
 
     def test_constructor_projectname_bad_verify_exception(self):
-        self.doubleNameValidator.validate = Mock(return_value=False)
+        self.doubleNameValidator.validate = mock.Mock(return_value=False)
         self.assertRaises(
             excClass = ValueError,
             callableObj = ProjectFolder,
@@ -54,12 +59,12 @@ class TestProjectFolder(unittest.TestCase):
     
     
     def test__get_base_path__is_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.assertEqual('base', self.projectFolder.get_base_path())
     
     
     def test__get_path__is_joined_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.assertEqual(
             os.path.join('base', 'shellfash'),
             self.projectFolder.get_path()
@@ -67,14 +72,14 @@ class TestProjectFolder(unittest.TestCase):
         
     
     def test__join__no_args(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.assertEqual(
             os.path.join('base', 'shellfash'),
             self.projectFolder.join()
         )
         
     def test__join__with_args(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.assertEqual(
             os.path.join('base', 'shellfash', 'one'),
             self.projectFolder.join('one')
@@ -85,7 +90,7 @@ class TestProjectFolder(unittest.TestCase):
         )
     
     def test__join_open__return_value_is_from_open_builtin(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.doubleOpen.return_value = 'file object'
         returnValue = self.projectFolder.join_open(
             pathSequence = (),
@@ -93,7 +98,7 @@ class TestProjectFolder(unittest.TestCase):
         self.assertEqual('file object', returnValue)
         
     def test__join_open__assert_extra_args_passed_to_open_builtin(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.projectFolder.join_open(
             (),
             1, 2, 3,
@@ -110,7 +115,7 @@ class TestProjectFolder(unittest.TestCase):
         )
         
     def test__join_open__pathSequence_is_joined_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = Mock(return_value='base')
+        self.doubleAppDirs.user_data_dir = mock.Mock(return_value='base')
         self.projectFolder.join_open(
             ('one', 'two')
         )

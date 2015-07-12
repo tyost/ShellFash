@@ -6,7 +6,12 @@ License:
 '''
 import unittest
 from shellfash.view.NativeWindow import NativeWindow
-from unittest.mock import Mock
+try:
+    # Python 3.3 and higher.
+    from unittest import mock
+except ImportError:
+    # Python 3.2.
+    import mock
 
 class TestNativeWindowConstructor(unittest.TestCase):
     '''
@@ -14,7 +19,7 @@ class TestNativeWindowConstructor(unittest.TestCase):
     '''
 
     def setUp(self):
-        self.stubNativeWindow = Mock(
+        self.stubNativeWindow = mock.Mock(
             is_supported = lambda: True
         )
 
@@ -35,18 +40,18 @@ class TestNativeWindowConstructor(unittest.TestCase):
         self.assertEqual(42, nativeWindow.get_handle())
 
     def test_WindowHandle_BadGetHandle(self):
-        testObj = Mock(getHandle = "not function")
+        testObj = mock.Mock(getHandle = "not function")
         self.assertRaises(TypeError, NativeWindow,
                           testObj, self.stubNativeWindow)
 
     def test_WindowHandle_GoodGetHandle(self):
-        testObj = Mock(getHandle = lambda: 42)
+        testObj = mock.Mock(getHandle = lambda: 42)
         nativeWindow = NativeWindow(testObj, self.stubNativeWindow)
         self.assertEqual(42, nativeWindow.get_handle())
         
     def test__clsNativeWindow_If_Not_None_Then_Exception_Not_Swallowed(self):
         # The mock, pretending to be a constructor, doesn't return an object.
-        testClsNativeWindow = Mock(return_value=None)
+        testClsNativeWindow = mock.Mock(return_value=None)
         self.assertRaises(AttributeError, NativeWindow,
                           42, testClsNativeWindow)
  
