@@ -29,6 +29,8 @@ setup(
     install_requires=[
         'appdirs>=1.4',
         'click>=4,<5',
+        # Only needed for Python 3.2, where it is not included by default.
+        'mock',
         'wxPython_Phoenix>=3'
     ],
 )
