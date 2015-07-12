@@ -5,7 +5,6 @@ License:
     See the LICENSE file for details.
 '''
 import platform
-from shellfash.view.native.Win32API import Win32API
 
 class _NativeWindowWin32(object):
     '''
@@ -22,6 +21,9 @@ class _NativeWindowWin32(object):
         '''
         Constructor
         '''
+        
+        from shellfash.view.native.Win32API import Win32API
+        
         self._handle = windowHandle
         self._win32 = _win32 or Win32API()
     
