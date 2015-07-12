@@ -60,7 +60,7 @@ class ProjectFolder(object):
         # TODO: Read path from config.ini if present
         # (using a separate class like GlobalConfig).
         # Otherwise get the path from appdirs.
-        return self._appDirs.user_data_dir()
+        return self._appDirs.user_data_dir
     
     def get_path(self):
         '''
