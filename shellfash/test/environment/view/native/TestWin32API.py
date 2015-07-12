@@ -6,7 +6,6 @@ License:
 '''
 import platform
 import unittest
-from shellfash.view.native.Win32API import Win32API
 from shellfash.test.helper.TestWindowCreator import TestWindowCreator
 
 @unittest.skipUnless(
@@ -26,6 +25,7 @@ class TestWin32API(unittest.TestCase):
         cls.WINDOW_TITLE = 'TestWin32API ShellFash Window '
         
     def setUp(self):
+        from shellfash.view.native.Win32API import Win32API
         self.win32API = Win32API()
 
     def tearDown(self):
