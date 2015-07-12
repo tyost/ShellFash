@@ -6,8 +6,7 @@ License:
 '''
 import unittest
 from shellfash.view.NativeWindow import NativeWindow
-from types import SimpleNamespace
-
+from unittest.mock import Mock
 
 class TestNativeWindowConstructor(unittest.TestCase):
     '''
@@ -15,7 +14,7 @@ class TestNativeWindowConstructor(unittest.TestCase):
     '''
 
     def setUp(self):
-        self.stubNativeWindow = SimpleNamespace(
+        self.stubNativeWindow = Mock(
             is_supported = lambda: True
         )
 
@@ -36,15 +35,21 @@ class TestNativeWindowConstructor(unittest.TestCase):
         self.assertEqual(42, nativeWindow.get_handle())
 
     def test_WindowHandle_BadGetHandle(self):
-        testObj = SimpleNamespace(getHandle = "not function")
+        testObj = Mock(getHandle = "not function")
         self.assertRaises(TypeError, NativeWindow,
                           testObj, self.stubNativeWindow)
 
     def test_WindowHandle_GoodGetHandle(self):
-        testObj = SimpleNamespace(getHandle = lambda: 42)
+        testObj = Mock(getHandle = lambda: 42)
         nativeWindow = NativeWindow(testObj, self.stubNativeWindow)
         self.assertEqual(42, nativeWindow.get_handle())
-    
+        
+    def test__clsNativeWindow_If_Not_None_Then_Exception_Not_Swallowed(self):
+        # The mock, pretending to be a constructor, doesn't return an object.
+        testClsNativeWindow = Mock(return_value=None)
+        self.assertRaises(AttributeError, NativeWindow,
+                          42, testClsNativeWindow)
+ 
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

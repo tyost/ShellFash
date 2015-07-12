@@ -23,7 +23,7 @@ class NativeWindow(object):
                 a native window from the operating system. It can also
                 be an object with a getHandle method, such as a wxPython
                 Window object.
-        '''        
+        '''
         # Use the windowHandle itself if it can be converted to an integer.
         try:
             self._handle = int(windowHandle)
@@ -42,13 +42,12 @@ class NativeWindow(object):
                             'or have a getHandle function returning one.')
         
         # Create a new instance of the native window class
-        # that was provided, if possible.
-        try:
+        # that was provided, if present. Otherwise use the platform
+        # default.
+        if _clsNativeWindow != None:
             _osNativeWindow = _clsNativeWindow(self._handle)
             if _osNativeWindow.is_supported():
                 self._osNativeWindow = _osNativeWindow
-        except (AttributeError, TypeError, ValueError):
-            pass
         
         # Otherwise create one based on the operating system.
         if not hasattr(self, '_osNativeWindow'):
@@ -57,6 +56,7 @@ class NativeWindow(object):
                 raise NotImplementedError(
                     'This platform is not supported.'
                 )
+    
     
     def get_handle(self):
         '''
