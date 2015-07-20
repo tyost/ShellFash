@@ -6,7 +6,7 @@ License:
 '''
 import unittest
 from shellfash.model.ProjectFolder import ProjectFolder
-
+from shellfash.model.ProjectName import ProjectName
 
 class TestProjectFolder(unittest.TestCase):
     '''
@@ -16,7 +16,7 @@ class TestProjectFolder(unittest.TestCase):
     def setUp(self):
         # Create instance of class under test.
         self.projectFolder = ProjectFolder(
-            projectName = 'shellfash',
+            projectName = ProjectName('shellfash'),
         )
 
 

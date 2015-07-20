@@ -14,32 +14,15 @@ class ProjectFolder(object):
     def __init__(self,
                  projectName,
                  _appDirs=None,
-                 _nameValidator=None,
                  _open=open):
         '''
         Constructor
         
         Args:
-            projectName (string): The name of the project.
-            
-        Raises:
-            ValueError: If projectName does not fit the syntax for
-                the name of a project.
+            projectName (ProjectName): The object giving the name
+                of the project.
         '''
-        
-        if not _nameValidator:
-            from shellfash.model.ProjectNameValidator \
-                    import ProjectNameValidator
-            self._nameValidator = ProjectNameValidator()
-        else:
-            self._nameValidator = _nameValidator
-
-        if not self._nameValidator.validate(projectName):
-            raise ValueError('Argument projectName was "' + projectName
-                             + '" which does not match the syntax'
-                             'for a valid project name.')
-        else:
-            self._projectName = projectName 
+        self._projectName = projectName 
         
         if not _appDirs:
             from appdirs import AppDirs
@@ -71,7 +54,7 @@ class ProjectFolder(object):
         
         return os.path.join(
             self.get_base_path(),
-            self._projectName
+            self._projectName.get_full_name()
         )
     
     def join(self, *args):

@@ -8,7 +8,7 @@ import re
 
 class ProjectNameValidator(object):
     '''
-    Checks if project names are valid.
+    Checks if project name strings are valid.
     
     A name is valid if it:
         starts with a number, letter or underscore,
@@ -29,14 +29,14 @@ class ProjectNameValidator(object):
         )
     
     
-    def validate(self, projectName):
+    def validate(self, projectNameString):
         '''
         Returns True if a project name is valid.
         
         Args:
-            projectName (string): The project name to check.
+            projectNameString (string): The project name to check.
             
         Returns:
-            bool: True if projectName is valid, False otherwise.
+            bool: True if projectNameString is valid, False otherwise.
         '''
-        return bool(self._regex.match(projectName))
+        return bool(self._regex.match(projectNameString))

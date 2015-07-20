@@ -6,13 +6,13 @@ License:
 '''
 import unittest
 from shellfash.model.ProjectFolder import ProjectFolder
+from shellfash.model.ProjectName import ProjectName
 try:
     # Python 3.3 and higher.
     from unittest import mock
 except ImportError:
     # Python 3.2.
     import mock
-from shellfash.model.ProjectNameValidator import ProjectNameValidator
 from appdirs import AppDirs
 import os
 
@@ -24,8 +24,11 @@ class TestProjectFolder(unittest.TestCase):
 
     def setUp(self):
         # Set up doubles to replace real objects during testing.
-        self.doubleNameValidator = mock.NonCallableMock(
-            spec = ProjectNameValidator()
+        self.doubleProjectName = mock.NonCallableMock(
+            spec = ProjectName('shellfash')
+        )
+        self.doubleProjectName.get_full_name = mock.Mock(
+            return_value='shellfash'
         )
         self.doubleAppDirs = mock.NonCallableMock(
             spec = AppDirs('shellfash')
@@ -34,30 +37,12 @@ class TestProjectFolder(unittest.TestCase):
     
         # Create instance of class under test.
         self.projectFolder = ProjectFolder(
-            projectName = 'shellfash',
-            _nameValidator = self.doubleNameValidator,
+            projectName = self.doubleProjectName,
             _appDirs = self.doubleAppDirs,
             _open = self.doubleOpen
         )
-    
-    
-    def test_constructor_projectname_good_verify_no_exception(self):
-        self.doubleNameValidator.validate = mock.Mock(return_value=True)
-        self.projectFolder = ProjectFolder(
-            projectName = 'GoodName',
-            _nameValidator = self.doubleNameValidator
-        )
 
-    def test_constructor_projectname_bad_verify_exception(self):
-        self.doubleNameValidator.validate = mock.Mock(return_value=False)
-        self.assertRaises(
-            excClass = ValueError,
-            callableObj = ProjectFolder,
-            projectName = 'Bad/Name',
-            _nameValidator = self.doubleNameValidator
-        )
-    
-    
+
     def test__get_base_path__is_user_data_folder(self):
         self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual('base', self.projectFolder.get_base_path())
