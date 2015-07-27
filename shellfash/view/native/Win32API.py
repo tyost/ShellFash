@@ -118,6 +118,33 @@ class Win32API(object):
         
         return bool(Win32API._DestroyWindow(hWnd))
     
+    def EnumWindows(self, lpEnumFunc, lParam):
+        '''
+        See: https://msdn.microsoft.com/en-us/library/windows/desktop/ms633497%28v=vs.85%29.aspx
+        '''
+        # The type for the callback function lpEnumFunc.
+        EnumWindowsProc = ctypes.WINFUNCTYPE(
+            # Return Value
+            ctypes.wintypes.BOOL,
+            # Parameters
+            ctypes.wintypes.HWND,
+            ctypes.wintypes.LPARAM
+        )
+        
+        # Create a reference to the real wrapper from ctypes
+        # if we don't have one already.
+        if not hasattr(Win32API, '_EnumWindows'):
+            Win32API._EnumWindows = ctypes.windll.user32.EnumWindows
+            Win32API._EnumWindows.argtypes = [
+                EnumWindowsProc,
+                ctypes.wintypes.LPARAM
+            ]
+            Win32API._EnumWindows.restype = ctypes.wintypes.BOOL
+        
+        lpEnumFunc = EnumWindowsProc(lpEnumFunc)
+        
+        return bool(Win32API._EnumWindows(lpEnumFunc, lParam))
+    
     def GetModuleHandle(self, lpModuleName = None):
         '''
         See: https://msdn.microsoft.com/en-us/library/windows/desktop/ms683199%28v=vs.85%29.aspx
@@ -143,6 +170,19 @@ class Win32API(object):
             Win32API._IsIconic.restype = ctypes.wintypes.BOOL
         
         return bool(Win32API._IsIconic(hWnd))
+    
+    def IsWindowVisible(self, hWnd):
+        '''
+        See: https://msdn.microsoft.com/en-us/library/windows/desktop/ms633530%28v=vs.85%29.aspx
+        '''
+        # Create a reference to the real wrapper from ctypes
+        # if we don't have one already.
+        if not hasattr(Win32API, '_IsWindowVisible'):
+            Win32API._IsWindowVisible = ctypes.windll.user32.IsWindowVisible
+            Win32API._IsWindowVisible.argtypes = [ctypes.wintypes.HWND]
+            Win32API._IsWindowVisible.restype = ctypes.wintypes.BOOL
+        
+        return bool(Win32API._IsWindowVisible(hWnd))
     
     # Constants for parameter nCmdShow in ShowWindow and ShowWindowAsync.
     SW_FORCEMINIMIZE = 11

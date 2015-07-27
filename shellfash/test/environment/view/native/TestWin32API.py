@@ -7,6 +7,12 @@ License:
 import platform
 import unittest
 from shellfash.test.helper.TestWindowCreator import TestWindowCreator
+try:
+    # Python 3.3 and higher.
+    from unittest import mock
+except ImportError:
+    # Python 3.2.
+    import mock
 
 @unittest.skipUnless(
     platform.system() == 'Windows',
@@ -31,7 +37,46 @@ class TestWin32API(unittest.TestCase):
     def tearDown(self):
         self.windowCreator.destroy_all()
 
-    def test_ShowWindow_minimize(self):
+
+    def test__EnumWindows__find_1_test_window__use_lparam(self):
+        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
+        
+        mockCallback = mock.Mock(return_value=True)
+        self.win32API.EnumWindows(
+            lpEnumFunc = mockCallback,
+            lParam = 42
+        )
+        
+        mockCallback.assert_any_call(windowHandle, 42)
+        
+    def test__EnumWindows__lpEnumFunc_returning_false_ends_early(self):
+        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 2)
+        
+        mockCallback = mock.Mock(return_value=False)
+        self.win32API.EnumWindows(
+            lpEnumFunc = mockCallback,
+            lParam = 0
+        )
+        
+        self.assertEqual(1, mockCallback.call_count)
+
+    
+    def test__IsWindowVisible__window_visible(self):
+        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
+        self.assertTrue(self.win32API.IsWindowVisible(windowHandle))
+
+    def test__IsWindowVisible__window_hidden(self):
+        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        testWindow = TestWin32API.windowCreator.windows[0]
+        testWindow.Hide()
+        
+        windowHandle = testWindow.GetHandle()
+        self.assertFalse(self.win32API.IsWindowVisible(windowHandle))
+
+
+    def test__ShowWindow__minimize(self):
         TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
         
         windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
@@ -41,7 +86,7 @@ class TestWin32API(unittest.TestCase):
         )    
 
         self.assertTrue(self.win32API.IsIconic(windowHandle))
-    
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
