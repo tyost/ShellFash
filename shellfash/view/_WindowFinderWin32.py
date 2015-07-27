@@ -17,20 +17,18 @@ class _WindowFinderWin32(object):
         '''
         Constructor
         '''
-        # Swallow the exception thrown for other platforms.
-        try:
+        if _win32 == None:
             from shellfash.view.native.Win32API import Win32API
-            self._win32 = _win32 or Win32API()
-        except ValueError:
-            pass
+            _win32 = Win32API()
+        self._win32 = _win32
 
-        
+
     def is_supported(self):
         '''
         Returns true if this object will work on this platform.
         '''
         return platform.system() == 'Windows'
-    
+
     def get_visible_top_handles(self):
         '''
         Returns a list of all the visible and top-level window handles
