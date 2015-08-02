@@ -18,7 +18,7 @@ class _WindowFinderWin32(object):
         Constructor
         '''
         if _win32 == None:
-            from shellfash.view.native.Win32API import Win32API
+            from shellfash.model.native.Win32API import Win32API
             _win32 = Win32API()
         self._win32 = _win32
 

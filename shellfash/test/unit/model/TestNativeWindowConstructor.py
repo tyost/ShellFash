@@ -5,7 +5,7 @@ License:
     See the LICENSE file for details.
 '''
 import unittest
-from shellfash.view.NativeWindow import NativeWindow
+from shellfash.model.NativeWindow import NativeWindow
 try:
     # Python 3.3 and higher.
     from unittest import mock

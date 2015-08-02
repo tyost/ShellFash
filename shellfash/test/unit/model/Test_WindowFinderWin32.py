@@ -5,7 +5,7 @@ License:
     See the LICENSE file for details.
 '''
 import unittest
-from shellfash.view._WindowFinderWin32 import _WindowFinderWin32
+from shellfash.model._WindowFinderWin32 import _WindowFinderWin32
 try:
     # Python 3.3 and higher.
     from unittest import mock

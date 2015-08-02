@@ -31,7 +31,7 @@ class TestWin32API(unittest.TestCase):
         cls.WINDOW_TITLE = 'TestWin32API ShellFash Window '
         
     def setUp(self):
-        from shellfash.view.native.Win32API import Win32API
+        from shellfash.model.native.Win32API import Win32API
         self.win32API = Win32API()
 
     def tearDown(self):

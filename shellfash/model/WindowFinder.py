@@ -18,7 +18,7 @@ class WindowFinder(object):
         # that was provided, if present.
         # Otherwise create one based on the operating system.
         if _osWindowFinder == None:
-            from shellfash.view._WindowFinderWin32 import _WindowFinderWin32
+            from shellfash.model._WindowFinderWin32 import _WindowFinderWin32
             _osWindowFinder = _WindowFinderWin32()
             if not _osWindowFinder.is_supported():
                 raise NotImplementedError(

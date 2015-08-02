@@ -25,7 +25,7 @@ class _NativeWindowWin32(object):
         
         # Swallow the exception thrown for other platforms.
         try:
-            from shellfash.view.native.Win32API import Win32API
+            from shellfash.model.native.Win32API import Win32API
             self._win32 = _win32 or Win32API()
         except ValueError:
             pass

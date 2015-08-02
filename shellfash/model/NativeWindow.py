@@ -4,7 +4,7 @@ License:
     This code is licensed to you under an open source license (MIT/X11).
     See the LICENSE file for details.
 '''
-from shellfash.view._NativeWindowWin32 import _NativeWindowWin32
+from shellfash.model._NativeWindowWin32 import _NativeWindowWin32
 
 class NativeWindow(object):
     '''
