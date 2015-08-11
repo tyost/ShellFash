@@ -7,6 +7,7 @@ License:
 import platform
 import unittest
 from shellfash.test.helper.TestWindowCreator import TestWindowCreator
+import time
 try:
     # Python 3.3 and higher.
     from unittest import mock
@@ -27,10 +28,11 @@ class TestWin32API(unittest.TestCase):
     def setUpClass(cls):
         super(TestWin32API, cls).setUpClass()
         
-        cls.windowCreator = TestWindowCreator()
         cls.WINDOW_TITLE = 'TestWin32API ShellFash Window '
-        
+
     def setUp(self):
+        self.windowCreator = TestWindowCreator()
+        
         from shellfash.model.native.Win32API import Win32API
         self.win32API = Win32API()
 
@@ -39,8 +41,8 @@ class TestWin32API(unittest.TestCase):
 
 
     def test__EnumWindows__find_1_test_window__use_lparam(self):
-        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
-        windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
+        self.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        windowHandle = self.windowCreator.get_handle(0)
         
         mockCallback = mock.Mock(return_value=True)
         self.win32API.EnumWindows(
@@ -51,7 +53,7 @@ class TestWin32API(unittest.TestCase):
         mockCallback.assert_any_call(windowHandle, 42)
         
     def test__EnumWindows__lpEnumFunc_returning_false_ends_early(self):
-        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 2)
+        self.windowCreator.create(TestWin32API.WINDOW_TITLE, 2)
         
         mockCallback = mock.Mock(return_value=False)
         self.win32API.EnumWindows(
@@ -63,23 +65,23 @@ class TestWin32API(unittest.TestCase):
 
     
     def test__IsWindowVisible__window_visible(self):
-        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
-        windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
+        self.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        windowHandle = self.windowCreator.get_handle(0)
         self.assertTrue(self.win32API.IsWindowVisible(windowHandle))
 
     def test__IsWindowVisible__window_hidden(self):
-        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
-        testWindow = TestWin32API.windowCreator.windows[0]
-        testWindow.Hide()
+        self.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        testWindow = self.windowCreator.windows[0]
+        testWindow.withdraw()
         
-        windowHandle = testWindow.GetHandle()
+        windowHandle = self.windowCreator.get_handle(0)
         self.assertFalse(self.win32API.IsWindowVisible(windowHandle))
 
 
     def test__ShowWindow__minimize(self):
-        TestWin32API.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
+        self.windowCreator.create(TestWin32API.WINDOW_TITLE, 1)
         
-        windowHandle = TestWin32API.windowCreator.windows[0].GetHandle()
+        windowHandle = self.windowCreator.get_handle(0)
         self.win32API.ShowWindow(
             windowHandle,
             self.win32API.SW_MINIMIZE
