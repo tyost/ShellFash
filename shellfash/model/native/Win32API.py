@@ -4,8 +4,12 @@ License:
     This code is licensed to you under an open source license (MIT/X11).
     See the LICENSE file for details.
 '''
-import ctypes
-import ctypes.wintypes
+import platform
+
+# Avoid exceptions when the file is simply loaded on other platforms.
+if platform.system() == 'Windows':
+    import ctypes
+    import ctypes.wintypes
 
 class Win32API(object):
     '''
