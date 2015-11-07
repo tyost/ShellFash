@@ -5,15 +5,10 @@ License:
     See the LICENSE file for details.
 '''
 import unittest
+from unittest import mock
 from shellfash.model.ProjectName import ProjectName
 from shellfash.model.ProjectNameValidator import ProjectNameValidator
 from shellfash.model.ProjectNameError import ProjectNameError
-try:
-    # Python 3.3 and higher.
-    from unittest import mock
-except ImportError:
-    # Python 3.2.
-    import mock
 
 class TestProjectName(unittest.TestCase):
     '''
