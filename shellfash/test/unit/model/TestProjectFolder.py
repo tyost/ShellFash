@@ -5,14 +5,9 @@ License:
     See the LICENSE file for details.
 '''
 import unittest
+from unittest import mock
 from shellfash.model.ProjectFolder import ProjectFolder
 from shellfash.model.ProjectName import ProjectName
-try:
-    # Python 3.3 and higher.
-    from unittest import mock
-except ImportError:
-    # Python 3.2.
-    import mock
 from appdirs import AppDirs
 import os
 

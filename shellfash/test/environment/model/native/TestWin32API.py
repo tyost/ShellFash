@@ -6,14 +6,9 @@ License:
 '''
 import platform
 import unittest
+from unittest import mock
 from shellfash.test.helper.TestWindowCreator import TestWindowCreator
 import time
-try:
-    # Python 3.3 and higher.
-    from unittest import mock
-except ImportError:
-    # Python 3.2.
-    import mock
 
 @unittest.skipUnless(
     platform.system() == 'Windows',

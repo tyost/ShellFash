@@ -5,13 +5,8 @@ License:
     See the LICENSE file for details.
 '''
 import unittest
+from unittest import mock
 from shellfash.model.WindowFinder import WindowFinder
-try:
-    # Python 3.3 and higher.
-    from unittest import mock
-except ImportError:
-    # Python 3.2.
-    import mock
 
 class Test(unittest.TestCase):
     '''

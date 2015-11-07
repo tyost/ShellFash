@@ -20,7 +20,6 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4'
     ],
@@ -29,8 +28,6 @@ setup(
     install_requires=[
         'appdirs>=1.4',
         'click>=4,<5',
-        # Only needed for Python 3.2, where it is not included by default.
-        'mock',
         'wxPython_Phoenix>=3'
     ],
 )
