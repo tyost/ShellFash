@@ -27,7 +27,11 @@ setup(
     packages=find_packages(exclude=['test*']),
     install_requires=[
         'appdirs>=1.4',
-        'click>=4,<5',
+        'click>=5,<6',
         'wxPython_Phoenix>=3'
     ],
+    entry_points = '''
+        [console_scripts]
+        shelf=shellfash.view.console:main
+    '''
 )
