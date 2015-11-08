@@ -28,6 +28,7 @@ setup(
     install_requires=[
         'appdirs>=1.4',
         'click>=5,<6',
+        'pyfakefs',
         'wxPython_Phoenix>=3'
     ],
     entry_points = '''
