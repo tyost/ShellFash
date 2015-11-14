@@ -7,6 +7,7 @@ License:
     See the LICENSE file for details.
 '''
 import click
+from shellfash.controller.ProjectSaveController import ProjectSaveController
 from shellfash.model.ProjectName import ProjectName
 from shellfash.model.ProjectFolder import ProjectFolder
 
@@ -45,6 +46,20 @@ def path():
 
 def peek():
     pass
+
+@main.command()
+@click.argument('projectname')
+def saveall(projectname):
+    '''
+    TEMPORARY - Saves all visible windows to the project named
+    projectName. A project name must:
+        start with a number, letter or underscore,
+        contain only numbers, letters, underscores, spaces, dots or hyphens,
+        and end with a number, letter, or underscore.
+    '''
+    ProjectSaveController().saveall(
+        ProjectName(projectname)
+    )
 
 def status():
     '''

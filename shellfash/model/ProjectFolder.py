@@ -73,7 +73,7 @@ class ProjectFolder(object):
     
     def join_open(self, pathSequence, *args, **kwargs):
         '''
-        Opens
+        Opens 
         '''
         
         return self._open(self.join(*pathSequence), *args, **kwargs)

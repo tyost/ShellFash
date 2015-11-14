@@ -28,7 +28,8 @@ setup(
     install_requires=[
         'appdirs>=1.4',
         'click>=5,<6',
-        'wxPython_Phoenix>=3'
+        'wxPython_Phoenix>=3',
+        'xcffib'
     ],
     entry_points = '''
         [console_scripts]
