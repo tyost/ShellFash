@@ -22,7 +22,7 @@ class TestConsole(unittest.TestCase):
         self.doubleProjectController = mock.NonCallableMock(
             spec=ProjectController()
         )
-        self.doubleProjectController.createProject = mock.Mock()
+        self.doubleProjectController.create_project = mock.Mock()
         console._setDependencies(
             projectController=self.doubleProjectController
         )
@@ -41,7 +41,7 @@ class TestConsole(unittest.TestCase):
         self.assertTrue(result.output.startswith('Project created.'))
 
     def test__new__error_exit_code(self):
-        self.doubleProjectController.createProject.side_effect = OSError
+        self.doubleProjectController.create_project.side_effect = OSError
         result = self.cliRunner.invoke(console.new, ['Test'])
         self.assertNotEqual(0, result.exit_code)
 

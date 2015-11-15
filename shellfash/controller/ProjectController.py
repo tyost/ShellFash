@@ -19,7 +19,7 @@ class ProjectController(object):
         '''
         self._clsProjectFolder = _clsProjectFolder
 
-    def createProject(self, projectNameString):
+    def create_project(self, projectNameString):
         '''
         Creates a project with the specified name.
 

@@ -27,12 +27,12 @@ class TestProjectController(unittest.TestCase):
         )
 
     def test__createProject__create_called_for_valid_name(self):
-        self.controller.createProject('ValidName')
+        self.controller.create_project('ValidName')
         self.doubleFolder.assert_called_once()
 
     def test__createProject__create_not_called_for_invalid_name(self):
         try:
-            self.controller.createProject('Invalid Name/@#')
+            self.controller.create_project('Invalid Name/@#')
         except:
             pass
         self.assertFalse(self.doubleFolder.called)
@@ -40,7 +40,7 @@ class TestProjectController(unittest.TestCase):
     def test__createProject__exception_thrown_for_invalid_name(self):
         self.assertRaises(
             excClass=ProjectNameError,
-            callableObj=self.controller.createProject,
+            callableObj=self.controller.create_project,
             projectNameString='Invalid Name/@#',
         )
         pass

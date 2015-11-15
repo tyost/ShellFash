@@ -55,7 +55,7 @@ def new(name):
     '''
     Creates a new project with the specified NAME.
     '''
-    _projectController.createProject(name)
+    _projectController.create_project(name)
     click.echo('Project created.')
 
 
