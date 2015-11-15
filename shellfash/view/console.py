@@ -7,8 +7,25 @@ License:
     See the LICENSE file for details.
 '''
 import click
-from shellfash.model.ProjectName import ProjectName
+
+from shellfash.controller.ProjectController import ProjectController
 from shellfash.model.ProjectFolder import ProjectFolder
+from shellfash.model.ProjectName import ProjectName
+
+
+def _setDependencies(projectController=None):
+    '''
+    Put dependencies in module-level variables to permit using
+    test doubles.
+    '''
+    if projectController == None:
+        projectController = ProjectController()
+
+    global _projectController
+    _projectController = projectController
+
+_setDependencies()
+
 
 @click.group()
 def main():
@@ -22,7 +39,6 @@ def main():
     # about what library is missing and how to get it.
 
 
-
 # See http://www.gnu.org/prep/standards/html_node/Option-Table.html#Option-Table
 # for command option standards.
 
@@ -31,6 +47,17 @@ def main():
 # the setting for where folders are located?
 def folder():
     pass
+
+
+@main.command()
+@click.argument('name')
+def new(name):
+    '''
+    Creates a new project with the specified NAME.
+    '''
+    _projectController.createProject(name)
+    click.echo('Project created.')
+
 
 @main.command()
 def path():
@@ -43,22 +70,24 @@ def path():
         ).get_base_path()
     )
 
+
 def peek():
     pass
+
 
 def status():
     '''
     Outputs the status of the current project.
     '''
-    
+
+
 def switch():
     '''
     Switches to the project with the specified name.
     '''
 
-    
+
 def undo():
     '''
     Reverts the last command you entered.
     '''
-
