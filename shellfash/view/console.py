@@ -11,6 +11,7 @@ import click
 from shellfash.controller.ProjectController import ProjectController
 from shellfash.model.ProjectFolder import ProjectFolder
 from shellfash.model.ProjectName import ProjectName
+from shellfash.view.ConsoleMessages import ConsoleMessages
 
 
 def _setDependencies(projectController=None):
@@ -56,7 +57,7 @@ def new(name):
     Creates a new project with the specified NAME.
     '''
     _projectController.create_project(name)
-    click.echo('Project created.')
+    click.echo(ConsoleMessages().get_project_created(name))
 
 
 @main.command()

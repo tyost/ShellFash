@@ -10,6 +10,7 @@ import unittest
 
 from shellfash.controller.ProjectController import ProjectController
 from shellfash.view import console
+from shellfash.view.ConsoleMessages import ConsoleMessages
 
 
 class TestConsole(unittest.TestCase):
@@ -28,6 +29,7 @@ class TestConsole(unittest.TestCase):
         )
 
         self.cliRunner = CliRunner()
+        self.messages = ConsoleMessages()
 
     def tearDown(self):
         console._setDependencies()
@@ -38,7 +40,11 @@ class TestConsole(unittest.TestCase):
 
     def test__new__success_message(self):
         result = self.cliRunner.invoke(console.new, ['Test'])
-        self.assertTrue(result.output.startswith('Project created.'))
+        self.assertTrue(
+            result.output.startswith(
+                self.messages.get_project_created('Test')
+            )
+        )
 
     def test__new__error_exit_code(self):
         self.doubleProjectController.create_project.side_effect = OSError
