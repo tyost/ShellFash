@@ -51,11 +51,10 @@ class ProjectFolder(object):
             for ShellFash projects. The returned string does not
             end in a directory separator (slash).
         '''
-
         # TODO: Read path from config.ini if present
         # (using a separate class like GlobalConfig).
         # Otherwise get the path from appdirs.
-        return self._appDirs.user_data_dir
+        return os.path.join(self._appDirs.user_data_dir, 'projects')
 
     def get_path(self):
         '''
@@ -63,7 +62,6 @@ class ProjectFolder(object):
             ShellFash project. The returned string does not end
             in a directory separator (slash).
         '''
-
         return os.path.join(
             self.get_base_path(),
             self._projectName.get_full_name()
@@ -80,12 +78,10 @@ class ProjectFolder(object):
         Returns:
             string: The combined path.
         '''
-
         return os.path.join(self.get_path(), *args)
 
     def join_open(self, pathSequence, *args, **kwargs):
         '''
         Opens
         '''
-
         return self._open(self.join(*pathSequence), *args, **kwargs)
