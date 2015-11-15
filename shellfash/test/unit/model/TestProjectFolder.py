@@ -22,13 +22,13 @@ class TestProjectFolder(unittest.TestCase):
     def setUp(self):
         # Set up doubles to replace real objects during testing.
         self.doubleProjectName = mock.NonCallableMock(
-            spec=ProjectName('shellfash')
+            spec=ProjectName('projectname')
         )
         self.doubleProjectName.get_full_name = mock.Mock(
-            return_value='shellfash'
+            return_value='projectname'
         )
         self.doubleAppDirs = mock.NonCallableMock(
-            spec=AppDirs('shellfash')
+            spec=AppDirs('projectname')
         )
         self.doubleOpen = mock.Mock(spec=open)
         self.fakeFilesystem = FakeFilesystem()
@@ -49,25 +49,25 @@ class TestProjectFolder(unittest.TestCase):
     def test__get_path__is_joined_user_data_folder(self):
         self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
-            os.path.join('base', 'shellfash'),
+            os.path.join('base', 'projectname'),
             self.projectFolder.get_path()
         )
 
     def test__join__no_args(self):
         self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
-            os.path.join('base', 'shellfash'),
+            os.path.join('base', 'projectname'),
             self.projectFolder.join()
         )
 
     def test__join__with_args(self):
         self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
-            os.path.join('base', 'shellfash', 'one'),
+            os.path.join('base', 'projectname', 'one'),
             self.projectFolder.join('one')
         )
         self.assertEqual(
-            os.path.join('base', 'shellfash', 'one', 'two', 'three'),
+            os.path.join('base', 'projectname', 'one', 'two', 'three'),
             self.projectFolder.join('one', 'two', 'three')
         )
 
@@ -89,7 +89,7 @@ class TestProjectFolder(unittest.TestCase):
             opener='opener'
         )
         self.doubleOpen.assert_called_once_with(
-            os.path.join('base', 'shellfash'),
+            os.path.join('base', 'projectname'),
             1, 2, 3,
             newline='newline',
             closefd='closefd',
@@ -102,7 +102,7 @@ class TestProjectFolder(unittest.TestCase):
             ('one', 'two')
         )
         self.doubleOpen.assert_called_once_with(
-            os.path.join('base', 'shellfash', 'one', 'two')
+            os.path.join('base', 'projectname', 'one', 'two')
         )
 
     def test__create__creates_new_folder(self):
@@ -110,7 +110,7 @@ class TestProjectFolder(unittest.TestCase):
         self.projectFolder.create()
         self.assertTrue(
             self.fakeOs.path.isdir(
-                os.path.join('base', 'shellfash')
+                os.path.join('base', 'projectname')
             )
         )
 
