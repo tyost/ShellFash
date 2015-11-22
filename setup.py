@@ -23,15 +23,16 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4'
     ],
-    keywords='', # TODO: Keywords
+    keywords='',  # TODO: Keywords
     packages=find_packages(exclude=['test*']),
     install_requires=[
         'appdirs>=1.4',
         'click>=5,<6',
+        'inject',
         'pyfakefs',
         'wxPython_Phoenix>=3'
     ],
-    entry_points = '''
+    entry_points='''
         [console_scripts]
         shelf=shellfash.view.console:main
     '''
