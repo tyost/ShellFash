@@ -6,22 +6,23 @@ License:
 '''
 import platform
 
+from shellfash.framework import dependency
+from shellfash.model.native.Win32API import Win32API
+
+
 class _WindowFinderWin32(object):
     '''
     Finds native windows in the Microsoft Windows operating system.
-    
+
     Use WindowFinder instead of using this class directly.
     '''
-    
+
+    @dependency.params(_win32=Win32API)
     def __init__(self, _win32=None):
         '''
         Constructor
         '''
-        if _win32 == None:
-            from shellfash.model.native.Win32API import Win32API
-            _win32 = Win32API()
         self._win32 = _win32
-
 
     def is_supported(self):
         '''
@@ -35,15 +36,15 @@ class _WindowFinderWin32(object):
         currently present on the system. 
         '''
         handleList = []
-        
+
         def EnumWindowsCallback(hWnd, lParam):
             if self._win32.IsWindowVisible(hWnd):
                 handleList.append(hWnd)
             return True
-        
+
         self._win32.EnumWindows(
-            lpEnumFunc = EnumWindowsCallback,
-            lParam = 0
+            lpEnumFunc=EnumWindowsCallback,
+            lParam=0
         )
-        
+
         return handleList

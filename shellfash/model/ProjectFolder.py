@@ -4,7 +4,10 @@ License:
     This code is licensed to you under an open source license (MIT/X11).
     See the LICENSE file for details.
 '''
+from appdirs import AppDirs
 import os
+
+from shellfash.framework import dependency
 
 
 class ProjectFolder(object):
@@ -12,11 +15,16 @@ class ProjectFolder(object):
     Opens files in a project's folder.
     '''
 
+    @dependency.params(
+        _appDirs=lambda: AppDirs(appname='shellfash'),
+        _open=lambda: os.open,
+        _os=lambda: os
+    )
     def __init__(self,
                  projectName,
                  _appDirs=None,
-                 _open=open,
-                 _os=os):
+                 _open=None,
+                 _os=None):
         '''
         Constructor
 
@@ -26,12 +34,7 @@ class ProjectFolder(object):
         '''
         self._projectName = projectName
 
-        if not _appDirs:
-            from appdirs import AppDirs
-            self._appDirs = AppDirs(appname='shellfash')
-        else:
-            self._appDirs = _appDirs
-
+        self._appDirs = _appDirs
         self._open = _open
         self._os = _os
 

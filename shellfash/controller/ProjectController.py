@@ -4,6 +4,7 @@ License:
     This code is licensed to you under an open source license (MIT/X11).
     See the LICENSE file for details.
 '''
+from shellfash.framework import dependency
 from shellfash.model.ProjectFolder import ProjectFolder
 from shellfash.model.ProjectName import ProjectName
 
@@ -13,7 +14,8 @@ class ProjectController(object):
     Controls the model objects related to projects.
     '''
 
-    def __init__(self, _clsProjectFolder=ProjectFolder):
+    @dependency.params(_clsProjectFolder=lambda: ProjectFolder)
+    def __init__(self, _clsProjectFolder=None):
         '''
         Constructor.
         '''
