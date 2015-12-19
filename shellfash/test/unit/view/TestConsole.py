@@ -24,6 +24,7 @@ class TestConsole(unittest.TestCase):
             spec=ProjectController()
         )
         self.doubleProjectController.create_project = mock.Mock()
+        self.doubleProjectController.delete_project = mock.Mock()
         console._setDependencies(
             projectController=self.doubleProjectController
         )
@@ -50,6 +51,24 @@ class TestConsole(unittest.TestCase):
         self.doubleProjectController.create_project.side_effect = OSError
         result = self.cliRunner.invoke(console.new, ['Test'])
         self.assertNotEqual(0, result.exit_code)
+
+    def test__delete__success_exit_code(self):
+        result = self.cliRunner.invoke(console.delete, ['Test'])
+        self.assertEqual(0, result.exit_code)
+
+    def test__delete__success_message(self):
+        result = self.cliRunner.invoke(console.delete, ['Test'])
+        self.assertTrue(
+            result.output.startswith(
+                self.messages.get_project_deleted('Test')
+            )
+        )
+
+    def test__delete__error_exit_code(self):
+        self.doubleProjectController.delete_project.side_effect = OSError
+        result = self.cliRunner.invoke(console.delete, ['Test'])
+        self.assertNotEqual(0, result.exit_code)
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

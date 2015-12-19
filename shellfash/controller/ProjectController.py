@@ -37,3 +37,19 @@ class ProjectController(object):
         projectName = ProjectName(projectNameString)
         projectFolder = self._clsProjectFolder(projectName)
         projectFolder.create()
+
+    def delete_project(self, projectNameString):
+        '''
+        Deletes a project with the specified name.
+
+        Args:
+            projectNameString (string): The name of the project
+                to delete.
+
+        Raises:
+            OSError: If something goes wrong with the file system.
+            ProjectNameError: If the projectNameString is invalid.
+        '''
+        projectName = ProjectName(projectNameString)
+        projectFolder = self._clsProjectFolder(projectName)
+        projectFolder.delete()

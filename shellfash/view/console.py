@@ -61,6 +61,16 @@ def new(name):
 
 
 @main.command()
+@click.argument('name')
+def delete(name):
+    '''
+    Deletes the project with the specified NAME.
+    '''
+    _projectController.delete_project(name)
+    click.echo(ConsoleMessages().get_project_deleted(name))
+
+
+@main.command()
 def path():
     '''
     Displays the path of the folder of projects.

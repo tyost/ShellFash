@@ -27,9 +27,12 @@ class TestProjectFolder(unittest.TestCase):
         self.doubleProjectName.get_full_name = mock.Mock(
             return_value='projectname'
         )
+
         self.doubleAppDirs = mock.NonCallableMock(
             spec=AppDirs('projectname')
         )
+        self.doubleAppDirs.user_data_dir = 'base'
+
         self.doubleOpen = mock.Mock(spec=open)
         self.fakeFilesystem = FakeFilesystem()
         self.fakeOs = FakeOsModule(self.fakeFilesystem)
@@ -43,28 +46,24 @@ class TestProjectFolder(unittest.TestCase):
         )
 
     def test__get_base_path__is_based_on_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
             os.path.join('base', 'projects'),
             self.projectFolder.get_base_path()
         )
 
     def test__get_path__is_joined_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
             os.path.join('base', 'projects', 'projectname'),
             self.projectFolder.get_path()
         )
 
     def test__join__no_args(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
             os.path.join('base', 'projects', 'projectname'),
             self.projectFolder.join()
         )
 
     def test__join__with_args(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.assertEqual(
             os.path.join('base', 'projects', 'projectname', 'one'),
             self.projectFolder.join('one')
@@ -76,7 +75,6 @@ class TestProjectFolder(unittest.TestCase):
         )
 
     def test__join_open__return_value_is_from_open_builtin(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.doubleOpen.return_value = 'file object'
         returnValue = self.projectFolder.join_open(
             pathSequence=(),
@@ -84,7 +82,6 @@ class TestProjectFolder(unittest.TestCase):
         self.assertEqual('file object', returnValue)
 
     def test__join_open__assert_extra_args_passed_to_open_builtin(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.projectFolder.join_open(
             (),
             1, 2, 3,
@@ -101,7 +98,6 @@ class TestProjectFolder(unittest.TestCase):
         )
 
     def test__join_open__pathSequence_is_joined_user_data_folder(self):
-        self.doubleAppDirs.user_data_dir = 'base'
         self.projectFolder.join_open(
             ('one', 'two')
         )
@@ -109,8 +105,14 @@ class TestProjectFolder(unittest.TestCase):
             os.path.join('base', 'projects', 'projectname', 'one', 'two')
         )
 
-    def test__create__creates_new_folder(self):
-        self.doubleAppDirs.user_data_dir = 'base'
+    def test__create__raises_exception_when_folder_exists(self):
+        self.projectFolder.create()
+        self.assertRaises(
+            excClass=OSError,
+            callableObj=self.projectFolder.create
+        )
+
+    def test__create_and_delete__create_and_deletes_folder(self):
         self.projectFolder.create()
         self.assertTrue(
             self.fakeOs.path.isdir(
@@ -118,12 +120,11 @@ class TestProjectFolder(unittest.TestCase):
             )
         )
 
-    def test__create__raises_exception_when_folder_exists(self):
-        self.doubleAppDirs.user_data_dir = 'base'
-        self.projectFolder.create()
-        self.assertRaises(
-            excClass=OSError,
-            callableObj=self.projectFolder.create
+        self.projectFolder.delete()
+        self.assertFalse(
+            self.fakeOs.path.exists(
+                os.path.join('base', 'projects', 'projectname')
+            )
         )
 
 

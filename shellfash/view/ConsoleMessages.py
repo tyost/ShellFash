@@ -4,8 +4,6 @@ License:
     This code is licensed to you under an open source license (MIT/X11).
     See the LICENSE file for details.
 '''
-from shellfash.model.ProjectFolder import ProjectFolder
-from shellfash.model.ProjectName import ProjectName
 
 
 class ConsoleMessages(object):
@@ -32,3 +30,17 @@ class ConsoleMessages(object):
             string: The message using projectNameString.
         '''
         return "Project '%s' created." % projectNameString
+
+    def get_project_deleted(self, projectNameString):
+        '''
+        Returns the message to display when a project is deleted
+        successfully.
+
+        Args:
+            projectNameString (string): The name of the project
+                to use in the message.
+
+        Returns:
+            string: The message using projectNameString.
+        '''
+        return "Project '%s' deleted." % projectNameString

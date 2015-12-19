@@ -48,6 +48,15 @@ class ProjectFolder(object):
         '''
         self._os.makedirs(self.get_path())
 
+    def delete(self):
+        '''
+        Deletes the folder for this project.
+
+        Raises:
+            OSError: If something goes wrong.
+        '''
+        self._os.rmdir(self.get_path())
+
     def get_base_path(self):
         '''
         Returns a string giving the base path to the folder
